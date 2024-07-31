@@ -229,70 +229,123 @@ function MayorAMenor() {
 }
 
 
-function mostrarMenu() {
-    let opcion = prompt(
-        "Seleccione una opción:\n" +
-            "1. Mostrar todos los relojes\n" +
-            "2. Mostrar relojes de mujer\n" +
-            "3. Mostrar relojes de hombre\n" +
-            "4. Mostrar relojes Unisex\n" +
-            "5. Mostrar relojes Economicos\n" +
-            "6. Seleccione esta opcion para asignar el dinero maximo a gastar\n" +
-            "7. Seleccione esta opcion para elegir el color del reloj a buscar\n"+
-            "8. Ver los descuentos aplicados a los relojes de mujer\n"+
-            "9. Mostar la sumatoria de los precios de todos los relojes de la tienda\n"+
-            "10. Mostar los precios de los relojes de menor a mayor \n"+
-            "11. Mostar los precios de los relojes de mayor a menor \n"
-        )
-    
-    switch(opcion) {
-        case '1':
-            mostrarRelojes();
-            break;
-        case '2':
-            RelojesWoman();
-            break;
-        case '3':
-            RelojesMan();
-        break;
-        case '4':
-           RelojesUnisex();
-        break;
-        case '5':
-           RelojesEconomicos();
-        break;
-        case '6':
-           dineroMaximo();
-        break;
-        case '7':
-           FiltradoPorColor();
-        break;
-        case '8':
-           descuento();
-        break;
-        case '9':
-           sumatoria();
-        break;
-         case '10':
-           MenorAMayor();
-        break; 
-        case '11':
-           MayorAMenor();
-        break;
-        default:
-        alert('Opción no válida.');
+
+// Cargar relojes al carrito
+//opcion 12
+
+// no funciona
+
+
+const carrito = [];
+
+function CargarProducto() {
+    let seguirComprando = true;
+    while (seguirComprando)  {
+        const ArrayRelojes = reloj.map(el => `${el.id}- ${el.nombre}: $${el.precio}`).join('\n');
+        const IDproductoAComprar = parseInt(prompt(`Ingrese el id del producto a añadir \n\n ${ArrayRelojes}`));
+        for (let i = 0; i < reloj.length; i++) {
+            if (reloj[i].id === IDproductoAComprar) {
+                carrito.push(reloj[i])
+                alert("El producto se ha añadido al carrito correctamente");
+            } else if (IDproductoAComprar >= reloj.length) {
+                alert("El id ingresado no existe");
+            }
+        }
+        seguirComprando = confirm("¿Desea comprar otro producto?"); 
     }
 }
 
-mostrarMenu();
+// opcion 13
+// no funciona
 
-
-// Verificamos si hay al menos un elemento del array (un reloj)  que su precio sea mayor
-// a 150.000, por lo que se consideraria "caro"
-
-function relojesCaros() {
-    const relojCaro = reloj.some(el => el.precio > 150000);
-    alert('Hay relojes caros:', relojCaro);
+function verProductos() {
+    if (carrito.precio === 0){
+        alert("El carrito esta vacio")
+    }
+    let total = 0
+    for (let i = 0; i < carrito.length; i++) {
+        total = carrito[i].precio
+        alert(`Precio total , $${total}`);
+    }
 }
 
+function mostrarMenu() {
+    let continuar = true
 
+    while (continuar){
+        let opcion = prompt(
+            "Seleccione una opción:\n" +
+                "1. Mostrar todos los relojes\n" +
+                "2. Mostrar relojes de mujer\n" +
+                "3. Mostrar relojes de hombre\n" +
+                "4. Mostrar relojes Unisex\n" +
+                "5. Mostrar relojes Economicos\n" +
+                "6. Seleccione esta opcion para asignar el dinero maximo a gastar\n" +
+                "7. Seleccione esta opcion para elegir el color del reloj a buscar\n"+
+                "8. Ver los descuentos aplicados a los relojes de mujer\n"+
+                "9. Sumatoria de los precios de todos los relojes de la tienda\n"+
+                "10. Mostar los precios de los relojes de menor a mayor \n"+
+                "11. Mostar los precios de los relojes de mayor a menor \n" +
+                "12. Cargar productos al carrito\n"+
+                "13. Ver productos del carrito\n"+
+                "14. Eliminar productos del carrito\n"+
+                "15. Salir"
+            )
+        
+        switch(opcion) {
+            case '1':
+                mostrarRelojes();
+                break;
+            case '2':
+                RelojesWoman();
+                break;
+            case '3':
+                RelojesMan();
+            break;
+            case '4':
+                RelojesUnisex();
+            break;
+            case '5':
+                RelojesEconomicos();
+            break;
+            case '6':
+                dineroMaximo();
+            break;
+            case '7':
+                FiltradoPorColor();
+            break;
+            case '8':
+                descuento();
+            break;
+            case '9':
+                sumatoria();
+            break;
+            case '10':
+                MenorAMayor();
+            break; 
+            case '11':
+                MayorAMenor();
+            break;
+            case '12':
+                CargarProducto();
+            break;
+            case '13':
+                verProductos();
+            break;
+            case '14':
+                eliminarProducto();
+            break;
+            case '15':
+                continuar = false;
+                alert("Gracias por usar la tienda.");
+            break;
+            default:
+                alert('Opción no válida.');
+        }
+    }
+    if (continuar) {
+            continuar = confirm("¿Desea volver al menú anterior?");
+        }
+}
+
+mostrarMenu();
