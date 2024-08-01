@@ -199,14 +199,13 @@ function descuento() {
 }
 
 
-//Reducir el array a un unico valor para saber cual es la suma de todos los precios
-//opcion 9 
+//Ordenar el array del mayor al menor precios de los relojes
+//opcion 9
 
-function sumatoria() {
-  
-    const precioFinal = reloj.reduce((total, producto) => total + producto.precio, 0);
-
-    alert(`Precio total de todos los relojes de la tienda: $${precioFinal}`);
+function mayorAMenor() {
+    const ordenadoMayorAMenor = [...reloj].sort((a, b) => b.precio - a.precio);
+    const mensaje = `Precios ordenados de mayor a menor:\n${ordenadoMayorAMenor.map(el => `Nombre: ${el.nombre}, Precio: $${el.precio.toFixed(2)}`).join('\n')}`;
+    alert(mensaje);
 }
 
 //Ordenar el array del menor al mayor precios de los relojes
@@ -219,19 +218,8 @@ function menorAMayor() {
 }
 
 
-//Ordenar el array del mayor al menor precios de los relojes
-//opcion 11
-
-function mayorAMenor() {
-    const ordenadoMayorAMenor = [...reloj].sort((a, b) => b.precio - a.precio);
-    const mensaje = `Precios ordenados de mayor a menor:\n${ordenadoMayorAMenor.map(el => `Nombre: ${el.nombre}, Precio: $${el.precio.toFixed(2)}`).join('\n')}`;
-    alert(mensaje);
-}
-
-
-
 // Cargar relojes al carrito
-//opcion 12
+//opcion 11
 
 const carrito = [];
 
@@ -257,7 +245,7 @@ function cargarProducto() {
 }
 
 // Ver carrito
-// opcion 13
+// opcion 12
 
 function verProductos() {
     if (carrito.length === 0) {
@@ -277,8 +265,7 @@ function verProductos() {
 }
 
 //Eliminar un producto del carrito
-//opcion 14
-
+//opcion 13
 
 function eliminarProducto() {
     if (carrito.length === 0) {
@@ -306,6 +293,34 @@ function eliminarProducto() {
 }
 
 
+
+// Generar factura 
+//opcion 14 
+
+function verFactura() {
+    const nombre = prompt("Ingrese su nombre:");
+    const apellido = prompt("Ingrese su apellido:");
+    const dni = prompt("Ingrese el DNI sin puntos ni comas");
+    const dniNumero = parseInt(dni);
+
+    if (!isNaN(dniNumero) && dniNumero >= 1000000 && dniNumero <= 99999999) {
+        const productosCarrito = carrito.map(el => `- ${el.nombre}: $${el.precio}`).join('\n');
+        const total = carrito.reduce((sum, el) => sum + el.precio, 0);
+
+        alert("Sus datos fueron cargados con éxito");
+
+        if (carrito.length > 0) {
+            alert(`¡Gracias por su compra!  \n\n INFORMACIÓN DE LA FACTURA: \n\n -Nombre: ${nombre} \n\n -Apellido: ${apellido} \n\n-DNI: ${dni} \n\n -Productos:\n${productosCarrito} \n\n -Precio Total: $${total}`);
+        } else {
+            alert(`No se ha podido realizar la factura, debe primero seleccionar relojes.`);
+        }
+    } else {
+        alert("El DNI no existe, ingrese un DNI correcto");
+    }
+}
+
+
+
 // menu 
 
 function mostrarMenu() {
@@ -322,12 +337,12 @@ function mostrarMenu() {
                 "6. Filtro de relojes por un precio dado\n" +
                 "7. Filtro de relojes por color dado\n"+
                 "8. Ver los descuentos aplicados a los relojes de mujer\n"+
-                "9. Sumatoria de los precios de todos los relojes de la tienda\n"+
+                "9. Mostar los precios de los relojes de mayor a menor\n"+
                 "10. Mostar los precios de los relojes de menor a mayor \n"+
-                "11. Mostar los precios de los relojes de mayor a menor \n" +
-                "12. Cargar productos al carrito\n"+
-                "13. Ver productos del carrito\n"+
-                "14. Eliminar productos del carrito\n"+
+                "11. Cargar productos al carrito \n" +
+                "12. Ver productos del carrito\n"+
+                "13. Eliminar productos del carrito\n"+
+                "14. Ver factura\n"+
                 "15. Salir"
             )
         
@@ -357,22 +372,22 @@ function mostrarMenu() {
                 descuento();
             break;
             case '9':
-                sumatoria();
+                mayorAMenor();
             break;
             case '10':
                 menorAMayor();
             break; 
             case '11':
-                mayorAMenor();
-            break;
-            case '12':
                 cargarProducto();
             break;
-            case '13':
+            case '12':
                 verProductos();
+            break; 
+            case '13':
+                eliminarProducto();
             break;
             case '14':
-                eliminarProducto();
+                verFactura();
             break;
             case '15':
                 continuar = false;
