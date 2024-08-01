@@ -134,15 +134,14 @@ function dineroMaximo() {
     const dineroMaximo = parseFloat(dineroMax);
 
     if (isNaN(dineroMaximo) || dineroMaximo <= 0) {
-        alert("Ingrese una cantidad valida");
+        alert("Ingrese una cantidad válida");
     } else {
         const relojes = reloj.filter(el => el.precio <= dineroMaximo);
         let cantidad = "";
 
         if (relojes.length > 0) {
-            relojes.forEach(el => {
-                cantidad = `Nombre: ${el.nombre}, Precio: $${el.precio}, Clasificación: ${el.clasificacion}, Color: ${el.color}\n`;
-            });
+            cantidad = relojes.map(el => 
+                `Nombre: ${el.nombre}, Precio: $${el.precio}, Clasificación: ${el.clasificacion}, Color: ${el.color}`).join('\n');
         } else {
             cantidad = `No se encontraron relojes con precio menor o igual a $${dineroMaximo}.`;
         }
@@ -150,6 +149,7 @@ function dineroMaximo() {
         alert(cantidad);
     }
 }
+
 
 
 //-----------FILTRADO POR COLOR CON PROMPT---------//
@@ -328,6 +328,11 @@ function eliminarProducto() {
 //opcion 14 
 
 function verFactura() {
+    if (carrito.length === 0) {
+        alert(`No se ha podido realizar la factura, debe primero seleccionar relojes.`);
+        return;
+    }
+
     const nombre = prompt("Ingrese su nombre:");
     const apellido = prompt("Ingrese su apellido:");
     const dni = prompt("Ingrese el DNI sin puntos ni comas");
@@ -339,11 +344,8 @@ function verFactura() {
 
         alert("Sus datos fueron cargados con éxito");
 
-        if (carrito.length > 0) {
-            alert(`¡Gracias por su compra!  \n\n INFORMACIÓN DE LA FACTURA: \n\n -Nombre: ${nombre} \n\n -Apellido: ${apellido} \n\n-DNI: ${dni} \n\n -Productos:\n${productosCarrito} \n\n -Precio Total: $${total}`);
-        } else {
-            alert(`No se ha podido realizar la factura, debe primero seleccionar relojes.`);
-        }
+         alert(`¡Gracias por su compra!  \n\n INFORMACIÓN DE LA FACTURA: \n\n -Nombre: ${nombre} \n\n -Apellido: ${apellido} \n\n-DNI: ${dni} \n\n -Productos:\n${productosCarrito} \n\n -Precio Total: $${total}`);
+        
     } else {
         alert("El DNI no existe, ingrese un DNI correcto");
     }
