@@ -1,69 +1,69 @@
 const reloj =  [
     {
-        id: "1",
+        id: 1,
         nombre: "Second of Sweetness",
         precio: 144000,
         clasificacion: "Unisex",
         color: "Amarillo",
     },
     {
-        id: "2",
+        id: 2,
         nombre: "Fall-Iage",
         precio: 160000,
         clasificacion: "Hombre",
         color: "Naranja",
     },
     {
-        id: "3",
+        id: 3,
         nombre: "Frostbloom",
         precio: 172000,
         clasificacion: "Hombre",
         color: "Gris",
     },
     {
-        id: "4",
+        id: 4,
         nombre: "What if Lemon",
         precio: 99000,
         clasificacion: "Mujer",
         color: "Amarillo",
     },
     {
-        id: "5",
+        id: 5,
         nombre: "What if Mint",
         precio: 99000,
         clasificacion: "Mujer",
         color: "Verde",
     },
     {
-        id: "6",
+        id: 6,
         nombre: "What if Rose",
         precio: 99000,
         clasificacion: "Hombre",
         color: "Rosa",
     },
     {
-        id: "7",
+        id: 7,
         nombre: "What if Sky",
         precio: 99000,
         clasificacion: "Hombre",
         color: "Celeste",
     },
     {
-        id: "8",
-        nombre: "Swatch Neon Wave",
+        id: 8,
+        nombre: " Swatch Neon Wave",
         precio: 168000,
         clasificacion: "Unisex",
         color: "Celeste",
     },
     { 
-        id: "9",
+        id: 9,
         nombre: "Swatch Neon Flash Arrow",
         precio: 210000,
         clasificacion: "Mujer",
         color: "Blanco",
     },
     { 
-        id: "10",
+        id: 10,
         nombre: "Swatch Neon Ridder",
         precio: 110000,
         clasificacion: "Hombre",
@@ -83,7 +83,7 @@ function mostrarRelojes() {
 //Filtrado de relojes de Mujer
 //opcion 2
 
-function RelojesWoman() {
+function relojesWoman() {
     const buscadoWoman = reloj.filter(el => el.clasificacion === "Mujer");
     const nombresYPrecios = buscadoWoman.map(el => `${el.nombre}: $${el.precio}`).join('\n');
     alert(`Los relojes de mujer disponibles son:\n${nombresYPrecios}`);
@@ -91,7 +91,7 @@ function RelojesWoman() {
 
 // Filtrado de relojes de Hombre
 //opcion 3
-function RelojesMan() {
+function relojesMan() {
     const buscadoMan = reloj.filter(el => el.clasificacion === "Hombre");
     const nombresYPrecios = buscadoMan.map(el => `${el.nombre}: $${el.precio}`).join('\n');
     alert(`Los relojes de hombre disponibles son:\n${nombresYPrecios}`);
@@ -100,7 +100,7 @@ function RelojesMan() {
 //Filtrado de relojes Unisex
 //opcion 4
 
-function RelojesUnisex() {
+function relojesUnisex() {
     const buscadoUnisex = reloj.filter(el => el.clasificacion === "Unisex");
     const nombresYPrecios = buscadoUnisex.map(el => `${el.nombre}: $${el.precio}`).join('\n');
     alert(`Los relojes unisex disponibles son:\n${nombresYPrecios}`);
@@ -109,7 +109,7 @@ function RelojesUnisex() {
 //Filtrar todos los relojes que su precio sea menor a $100000 
 //opcion 5
 
-function RelojesEconomicos() {
+function relojesEconomicos() {
     let resultado = "Los relojes económicos disponibles son:\n";
     for (let i = 0; i < reloj.length; i++) {
         if (reloj[i].precio < 100000) {
@@ -148,7 +148,7 @@ function dineroMaximo() {
 //-----------FILTRADO POR COLOR CON PROMPT---------//
 //opcion 7
 
-function FiltradoPorColor() {
+function filtradoPorColor() {
     const ColorBuscado = prompt("Ingrese el color a buscar del reloj");
 
     const colorBuscadoLower = ColorBuscado.toLowerCase();
@@ -178,26 +178,27 @@ function descuento() {
     const relojesActualizados = reloj.map(el => {
         if (el.clasificacion === "Mujer") {
             return {
-                ...el,
-                precio: el.precio * 0.90 
+                nombre: el.nombre,
+                precioOriginal: el.precio,
+                precioDescuento: el.precio * 0.90,
+                clasificacion: el.clasificacion
             };
         }
-        return el; 
+        return el;
     });
-
-    let mensaje = 'Relojes de mujer con descuento aplicado:\n';
+    
     const relojesMujerConDescuento = relojesActualizados.filter(el => el.clasificacion === "Mujer");
 
     if (relojesMujerConDescuento.length > 0) {
-        mensaje += relojesMujerConDescuento.map(el => 
-            `Nombre: ${el.nombre}, Precio con descuento: $${el.precio.toFixed(2)}, Clasificación: ${el.clasificacion}`
-        ).join('\n');
+        const mensaje = relojesMujerConDescuento.map(el =>
+            `Nombre: ${el.nombre}, Precio original: $${el.precioOriginal.toFixed(2)}, Precio con descuento: $${el.precioDescuento.toFixed(2)}`).join('\n');
+        alert(mensaje);
     } else {
-        mensaje += 'No se encontraron relojes de mujer.';
+        alert("No se encontraron relojes de mujer con descuento");
     }
-
-    alert(mensaje);
 }
+
+
 
 //Reducir el array a un unico valor para saber cual es la suma de todos los precios
 //opcion 9 
@@ -212,7 +213,7 @@ function sumatoria() {
 //Ordenar el array del menor al mayor precios de los relojes
 //opcion 10
 
-function MenorAMayor() {
+function menorAMayor() {
     const ordenadoMenorAMayor = [...reloj].sort((a, b) => a.precio - b.precio);
     const MenorAMayor = `Precios ordenados de menor a mayor:\n${ordenadoMenorAMayor.map(el => `Nombre: ${el.nombre}, Precio: $${el.precio}`).join('\n')}`;
     alert(MenorAMayor);
@@ -222,7 +223,7 @@ function MenorAMayor() {
 //Ordenar el array del mayor al menor precios de los relojes
 //opcion 11
 
-function MayorAMenor() {
+function mayorAMenor() {
     const ordenadoMayorAMenor = [...reloj].sort((a, b) => b.precio - a.precio);
     const mensaje = `Precios ordenados de mayor a menor:\n${ordenadoMayorAMenor.map(el => `Nombre: ${el.nombre}, Precio: $${el.precio.toFixed(2)}`).join('\n')}`;
     alert(mensaje);
@@ -233,39 +234,67 @@ function MayorAMenor() {
 // Cargar relojes al carrito
 //opcion 12
 
-// no funciona
-
-
 const carrito = [];
 
-function CargarProducto() {
+function cargarProducto() {
     let seguirComprando = true;
     while (seguirComprando)  {
+
         const ArrayRelojes = reloj.map(el => `${el.id}- ${el.nombre}: $${el.precio}`).join('\n');
         const IDproductoAComprar = parseInt(prompt(`Ingrese el id del producto a añadir \n\n ${ArrayRelojes}`));
+        
         for (let i = 0; i < reloj.length; i++) {
             if (reloj[i].id === IDproductoAComprar) {
                 carrito.push(reloj[i])
                 alert("El producto se ha añadido al carrito correctamente");
             } else if (IDproductoAComprar >= reloj.length) {
                 alert("El id ingresado no existe");
+                return;
             }
         }
-        seguirComprando = confirm("¿Desea comprar otro producto?"); 
+
+        seguirComprando = confirm("¿Desea añadir otro producto al carrito?"); 
     }
 }
 
+// Ver carrito
 // opcion 13
-// no funciona
 
 function verProductos() {
-    if (carrito.precio === 0){
-        alert("El carrito esta vacio")
+    if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
     }
-    let total = 0
+
+    let total = 0;
     for (let i = 0; i < carrito.length; i++) {
-        total = carrito[i].precio
-        alert(`Precio total , $${total}`);
+        total += carrito[i].precio;
+    }
+
+    const arrayCarrito = carrito.map(el => `ID numero: ${el.id} Nombre: ${el.nombre} Precio: $${el.precio}`).join('\n');
+
+    alert(` Los productos son:\n\n  ${arrayCarrito} 
+    \n\n Precio total del carrito: $${total}`); 
+}
+
+//Eliminar un producto del carrito
+//opcion 14
+
+function eliminarProducto() {
+    if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
+    const productosEnCarrito = carrito.map(el => `${el.id} - ${el.nombre}: $${el.precio}`).join('\n');
+    const idProductoAEliminar = parseInt(prompt(`Ingrese el id del producto a eliminar \n\n ${productosEnCarrito}`));
+
+    const index = carrito.findIndex(el => el.id === idProductoAEliminar);
+
+    if (index !== -1) {
+        carrito.splice(index, 1);
+        alert("El producto se ha eliminado del carrito.");
+    } else {
+        alert("El id ingresado no existe en el carrito.");
     }
 }
 
@@ -297,22 +326,22 @@ function mostrarMenu() {
                 mostrarRelojes();
                 break;
             case '2':
-                RelojesWoman();
+                relojesWoman();
                 break;
             case '3':
-                RelojesMan();
+                relojesMan();
             break;
             case '4':
-                RelojesUnisex();
+                relojesUnisex();
             break;
             case '5':
-                RelojesEconomicos();
+                relojesEconomicos();
             break;
             case '6':
                 dineroMaximo();
             break;
             case '7':
-                FiltradoPorColor();
+                filtradoPorColor();
             break;
             case '8':
                 descuento();
@@ -321,13 +350,13 @@ function mostrarMenu() {
                 sumatoria();
             break;
             case '10':
-                MenorAMayor();
+                menorAMayor();
             break; 
             case '11':
-                MayorAMenor();
+                mayorAMenor();
             break;
             case '12':
-                CargarProducto();
+                cargarProducto();
             break;
             case '13':
                 verProductos();
