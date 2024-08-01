@@ -106,7 +106,7 @@ function relojesUnisex() {
     alert(`Los relojes unisex disponibles son:\n${nombresYPrecios}`);
 }
 
-//Filtrar todos los relojes que su precio sea menor a $100000 
+//Filtrar todos los relojes que su precio sea menor a $100.000 
 //opcion 5
 
 function relojesEconomicos() {
@@ -125,17 +125,23 @@ function relojesEconomicos() {
 //opcion 6
 
 function dineroMaximo() {
-    const dineroMaximo = parseFloat(prompt("Ingresa el dinero máximo dispuesto a gastar:"));
+    const dineroMax = prompt("Ingresa el dinero máximo dispuesto a gastar:");
+
+    if (dineroMax === null) {
+        return; 
+    }
+
+    const dineroMaximo = parseFloat(dineroMax);
 
     if (isNaN(dineroMaximo) || dineroMaximo <= 0) {
-       alert("Ingrese una cantidad valida");
+        alert("Ingrese una cantidad valida");
     } else {
         const relojes = reloj.filter(el => el.precio <= dineroMaximo);
         let cantidad = "";
 
         if (relojes.length > 0) {
             relojes.forEach(el => {
-                cantidad += `Nombre: ${el.nombre}, Precio: $${el.precio}, Clasificación: ${el.clasificacion}, Color: ${el.color}\n`;
+                cantidad = `Nombre: ${el.nombre}, Precio: $${el.precio}, Clasificación: ${el.clasificacion}, Color: ${el.color}\n`;
             });
         } else {
             cantidad = `No se encontraron relojes con precio menor o igual a $${dineroMaximo}.`;
@@ -145,28 +151,36 @@ function dineroMaximo() {
     }
 }
 
+
 //-----------FILTRADO POR COLOR CON PROMPT---------//
 //opcion 7
 
-function filtradoPorColor() {
-    const ColorBuscado = prompt("Ingrese el color a buscar del reloj");
+function filtradoPorColor() { 
+    let continuarBuscando = true;
 
-    const colorBuscadoLower = ColorBuscado.toLowerCase();
+    while (continuarBuscando) {
+        const ColorBuscado = prompt("Ingrese el color a buscar del reloj");
 
-    const relojesPorColor = reloj.filter(el => el.color.toLowerCase() === colorBuscadoLower);
+        if (ColorBuscado === null) {
+            return;
+        }
 
-    let mensaje;
+        const colorBuscadoLower = ColorBuscado.toLowerCase();
+        const relojesPorColor = reloj.filter(el => el.color.toLowerCase() === colorBuscadoLower);
 
-    if (relojesPorColor.length > 0) {
-        const detalles = relojesPorColor.map(el => 
-            `Nombre: ${el.nombre}, Precio: $${el.precio}, Clasificación: ${el.clasificacion}`
-        );
-        mensaje = `Relojes de color ${ColorBuscado}:\n${detalles.join('\n')}`;
-    } else {
-        mensaje = `No se encontraron relojes de color ${ColorBuscado}.`;
+        let mensaje;
+
+        if (relojesPorColor.length > 0) {
+            const detalles = relojesPorColor.map(el => 
+                `-Nombre: ${el.nombre} -Precio: $${el.precio} -Clasificación: ${el.clasificacion}`);
+            mensaje = `Relojes de color ${ColorBuscado}:\n${detalles.join('\n')}`;
+        } else {
+            mensaje = `No se encontraron relojes de color ${ColorBuscado}.`;
+        }
+
+        alert(mensaje);
+        continuarBuscando = confirm("¿Desea buscar otro color?");
     }
-
-    alert(mensaje);
 }
 
 
@@ -225,27 +239,37 @@ const carrito = [];
 
 function cargarProducto() {
     let seguirComprando = true;
-    while (seguirComprando)  {
+    while (seguirComprando) {
+        const ArrayRelojes = reloj.map(el => `${el.id} - ${el.nombre}: $${el.precio}`).join('\n');
+        const productoAComprar = prompt(`Ingrese el id del producto a añadir \n\n ${ArrayRelojes}`);
 
-        const ArrayRelojes = reloj.map(el => `${el.id}- ${el.nombre}: $${el.precio}`).join('\n');
-        const IDproductoAComprar = parseInt(prompt(`Ingrese el id del producto a añadir \n\n ${ArrayRelojes}`));
-        
-        for (let i = 0; i < reloj.length; i++) {
-            if (reloj[i].id === IDproductoAComprar) {
-                carrito.push(reloj[i])
-                alert("El producto se ha añadido al carrito correctamente");
-            } else if (IDproductoAComprar >= reloj.length) {
-                alert("El id ingresado no existe");
-                return;
-            }
+        if (productoAComprar === null) {
+            return; 
         }
 
-        seguirComprando = confirm("¿Desea añadir otro producto al carrito?"); 
+        const IDproductoAComprar = parseInt(productoAComprar);
+
+        if (isNaN(IDproductoAComprar) || IDproductoAComprar <= 0) {
+            alert("Ingrese un ID válido.");
+            continue; 
+        }
+
+        const producto = reloj.find(el => el.id === IDproductoAComprar);
+
+        if (producto) {
+            carrito.push(producto);
+            alert("El producto se ha añadido al carrito correctamente");
+        } else {
+            alert("El ID ingresado no existe");
+        }
+
+        seguirComprando = confirm("¿Desea añadir otro producto al carrito?");
     }
 }
 
+
 // Ver carrito
-// opcion 12
+// opción 12
 
 function verProductos() {
     if (carrito.length === 0) {
@@ -253,16 +277,13 @@ function verProductos() {
         return;
     }
 
-    let total = 0;
-    for (let i = 0; i < carrito.length; i++) {
-        total = carrito[i].precio;
-    }
+    const total = carrito.reduce((acc, el) => acc + el.precio, 0);
 
     const arrayCarrito = carrito.map(el => `ID numero: ${el.id} Nombre: ${el.nombre} Precio: $${el.precio}`).join('\n');
 
-    alert(` Los productos son:\n\n  ${arrayCarrito} 
-    \n\n Precio total del carrito: $${total}`); 
+    alert(`Los productos son:\n\n${arrayCarrito}\n\nPrecio total del carrito: $${total}`);
 }
+
 
 //Eliminar un producto del carrito
 //opcion 13
@@ -274,7 +295,18 @@ function eliminarProducto() {
     }
 
     const productosEnCarrito = carrito.map(el => `${el.id} - ${el.nombre}: $${el.precio}`).join('\n');
-    const idProductoAEliminar = parseInt(prompt(`Ingrese el id del producto a eliminar \n\n ${productosEnCarrito}`));
+    const ProductoAEliminar = prompt(`Ingrese el id del producto a eliminar \n\n ${productosEnCarrito}`);
+
+    if (ProductoAEliminar === null) {
+        return;
+    }
+
+    const idProductoAEliminar = parseInt(ProductoAEliminar);
+
+    if (isNaN(idProductoAEliminar) || idProductoAEliminar <= 0) {
+        alert("Ingrese un ID válido.");
+        return;
+    }
 
     let index = -1;
     for (let i = 0; i < carrito.length; i++) {
@@ -288,11 +320,9 @@ function eliminarProducto() {
         carrito.splice(index, 1);
         alert("El producto se ha eliminado del carrito.");
     } else {
-        alert("El id ingresado no existe en el carrito.");
+        alert("El ID ingresado no existe en el carrito.");
     }
 }
-
-
 
 // Generar factura 
 //opcion 14 
@@ -319,9 +349,7 @@ function verFactura() {
     }
 }
 
-
-
-// menu 
+// menu principal   
 
 function mostrarMenu() {
     let continuar = true
