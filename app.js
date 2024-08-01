@@ -113,7 +113,7 @@ function relojesEconomicos() {
     let resultado = "Los relojes económicos disponibles son:\n";
     for (let i = 0; i < reloj.length; i++) {
         if (reloj[i].precio < 100000) {
-            resultado += `Nombre: ${reloj[i].nombre}, Precio: $${reloj[i].precio}\n`;
+            resultado = `Nombre: ${reloj[i].nombre}, Precio: $${reloj[i].precio}\n`;
         }
     }
     alert(resultado);
@@ -199,7 +199,6 @@ function descuento() {
 }
 
 
-
 //Reducir el array a un unico valor para saber cual es la suma de todos los precios
 //opcion 9 
 
@@ -268,7 +267,7 @@ function verProductos() {
 
     let total = 0;
     for (let i = 0; i < carrito.length; i++) {
-        total += carrito[i].precio;
+        total = carrito[i].precio;
     }
 
     const arrayCarrito = carrito.map(el => `ID numero: ${el.id} Nombre: ${el.nombre} Precio: $${el.precio}`).join('\n');
@@ -280,15 +279,23 @@ function verProductos() {
 //Eliminar un producto del carrito
 //opcion 14
 
+
 function eliminarProducto() {
     if (carrito.length === 0) {
         alert("El carrito está vacío.");
         return;
     }
+
     const productosEnCarrito = carrito.map(el => `${el.id} - ${el.nombre}: $${el.precio}`).join('\n');
     const idProductoAEliminar = parseInt(prompt(`Ingrese el id del producto a eliminar \n\n ${productosEnCarrito}`));
 
-    const index = carrito.findIndex(el => el.id === idProductoAEliminar);
+    let index = -1;
+    for (let i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === idProductoAEliminar) {
+            index = i;
+            break;
+        }
+    }
 
     if (index !== -1) {
         carrito.splice(index, 1);
@@ -297,6 +304,9 @@ function eliminarProducto() {
         alert("El id ingresado no existe en el carrito.");
     }
 }
+
+
+// menu 
 
 function mostrarMenu() {
     let continuar = true
@@ -309,8 +319,8 @@ function mostrarMenu() {
                 "3. Mostrar relojes de hombre\n" +
                 "4. Mostrar relojes Unisex\n" +
                 "5. Mostrar relojes Economicos\n" +
-                "6. Seleccione esta opcion para asignar el dinero maximo a gastar\n" +
-                "7. Seleccione esta opcion para elegir el color del reloj a buscar\n"+
+                "6. Filtro de relojes por un precio dado\n" +
+                "7. Filtro de relojes por color dado\n"+
                 "8. Ver los descuentos aplicados a los relojes de mujer\n"+
                 "9. Sumatoria de los precios de todos los relojes de la tienda\n"+
                 "10. Mostar los precios de los relojes de menor a mayor \n"+
