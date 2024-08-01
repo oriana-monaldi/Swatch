@@ -119,7 +119,7 @@ function relojesEconomicos() {
     alert(resultado);
 }
 
-// Pedir por prompt al usuario que ingrese el dinero maximo dispuesto a gastar, y que muestre en la consola cuales son los
+// Pedir por prompt al usuario que ingrese el dinero maximo dispuesto a gastar, y que muestre en un alert cuales son los
 //relojes que tienen un precio menor al que se pide por prompt
 // Precios e/ 100.000 y 200.000
 //opcion 6
@@ -149,8 +149,6 @@ function dineroMaximo() {
         alert(cantidad);
     }
 }
-
-
 
 //-----------FILTRADO POR COLOR CON PROMPT---------//
 //opcion 7
@@ -183,9 +181,7 @@ function filtradoPorColor() {
     }
 }
 
-
-//Si quisiera hacer una actualizacion de precios 
-// ej un descuento en todos los relojes de mujer 
+//Actualizacion de precios en los relojes de mujer
 //opcion 8
 
 function descuento() {
@@ -266,7 +262,6 @@ function cargarProducto() {
         seguirComprando = confirm("¿Desea añadir otro producto al carrito?");
     }
 }
-
 
 // Ver carrito
 // opción 12
